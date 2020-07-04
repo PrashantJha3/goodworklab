@@ -1,17 +1,50 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, { Component } from "react";
+import { render } from "react-dom";
+import Hello from "./Hello";
+import Flexi from "./flexi";
+import "./style.css";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const flexiConfig = {
+  items: [
+      {
+        "name": "person_name",
+        "label": "Person's Name",
+        "type": 'TextField',
+      },
+      {
+        "name": "states",
+        "label": "Person's state",
+        "type": "DropDown",
+            "values": [
+            "Maharashtra",
+            "Kerala",
+            "Tamil Nadu"
+            ]
+      }
+    ]
+};
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      name: "Person Name",
+      place: 'Bangalore',      
+    };
+  }
+
+  onFlexSubmit = (val) => {
+    this.setState({ name: val.name, place: val.dd });
+  }
+
+  render() {
+    return (
+      <div>
+        <Flexi onSubmitFn={this.onFlexSubmit} config={flexiConfig.items} />
+        <Hello name={this.state.name} place={this.state.place} />
+      </div>
+    );
+  }
+}
+
+render(<App />, document.getElementById("root"));
